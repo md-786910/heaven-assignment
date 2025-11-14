@@ -114,7 +114,7 @@ The easiest way to get started is using the automated setup script that handles 
 
 ```bash
 # Run the setup script (sets up backend, frontend, and tests API endpoints)
-./setup.sh
+./startApp.sh
 ```
 
 The setup script will:
