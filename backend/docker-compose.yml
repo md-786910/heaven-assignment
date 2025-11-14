@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: issue_tracker_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: issue_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - issue_tracker_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: issue_tracker_backend
+    environment:
+      DATABASE_URL: postgresql://postgres:password@postgres:5432/issue_tracker
+      SECRET_KEY: your-secret-key-change-in-production-use-env-variable
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./run.py:/app/run.py
+      - ./tests:/app/tests
+      - ./pytest.ini:/app/pytest.ini
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - issue_tracker_network
+    restart: unless-stopped
+
+networks:
+  issue_tracker_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

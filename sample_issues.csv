@@ -1,0 +1,6 @@
+title,description,status,priority,creator_id,assignee_id
+Login page not loading,Users are unable to access the login page,open,critical,1,2
+Add dark mode support,Implement dark theme across the application,open,medium,1,
+Update API documentation,Documentation needs to be updated with new endpoints,in_progress,low,2,1
+Fix memory leak in dashboard,Dashboard consuming too much memory,open,high,1,2
+Implement user preferences,Add user settings and preferences page,open,medium,2,
