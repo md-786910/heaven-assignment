@@ -12,6 +12,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
+    nano \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements file
